@@ -254,7 +254,7 @@ pipeline = Pipeline(
     PrepareDirectories(warc_prefix="examplecity"),
     WgetDownload(
         WgetArgs(),
-        max_tries=2,
+        max_tries=1,
         accept_on_exit_code=[0, 4, 7, 8],
         env={
             "item_dir": ItemValue("item_dir"),
