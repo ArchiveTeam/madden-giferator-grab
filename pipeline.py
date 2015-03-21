@@ -239,7 +239,7 @@ project = Project(
                 <a href="http://archiveteam.org/index.php?title=Madden_GIFERATOR">Wiki</a>
             </span>
         </h2>
-        <p></p>
+        <p>Saving the GIFs.</p>
         <!--<p class="projectBroadcastMessage"></p>-->
     """,
     # utc_deadline=datetime.datetime(2000, 1, 1, 23, 59, 0)
