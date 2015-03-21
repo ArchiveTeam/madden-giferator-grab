@@ -193,13 +193,15 @@ class WgetArgs(object):
             "--warc-header", "operator: Archive Team",
             "--warc-header", "madden-giferator-dld-script-version: " + VERSION,
             "--warc-header", ItemInterpolation("madden-gifferator-user: %(item_name)s"),
-            ]
+            "--no-skip-getaddrinfo",  # Use OS DNS resolver only
+        ]
 
         # Occasionally grab some of the assets
         if random.random() < 0.1:
             wget_args.extend([
+                "--recursive", "--level=1",
                 "--page-requisites",
-                "--span-hosts-allow", "page-requisites,linked-pages",
+                "--span-hosts-allow", "page-requisites",
             ])
 
         item_type, item_value = item['item_name'].split(':', 1)
@@ -264,7 +266,7 @@ pipeline = Pipeline(
         file_groups={
             "data": [
                 ItemInterpolation("%(item_dir)s/%(warc_file_base)s.warc.gz"),
-                ]
+            ]
         },
         id_function=stats_id_function,
         ),
@@ -285,7 +287,7 @@ pipeline = Pipeline(
                 "--recursive",
                 "--partial",
                 "--partial-dir", ".rsync-tmp",
-                ]
+            ]
         ),
     ),
     SendDoneToTracker(

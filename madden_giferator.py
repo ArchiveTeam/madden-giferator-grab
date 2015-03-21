@@ -2,9 +2,18 @@ import time
 import sys
 import re
 
-url_counter = 0
+total_try_counter = 0
 try_count = 0
 scraped_url_whitelist = set()
+
+
+def handle_total_try_count():
+    global total_try_counter
+
+    total_try_counter += 1
+
+    if total_try_counter > 1000:
+        raise Exception('Too many URLs! Please report this item to the admins.')
 
 
 def accept_url(url_info, record_info, verdict, reasons):
@@ -16,10 +25,16 @@ def accept_url(url_info, record_info, verdict, reasons):
     return verdict
 
 
-def handle_pre_response(url_info, record_info, response_info):
+def handle_response(url_info, record_info, response_info):
     global try_count
 
-    if response_info['status_code'] == 403:
+    handle_total_try_count()
+
+    if response_info['status_code'] == 400 and 'prod-api-madden.grw.io/' in url_info['url']:
+        # Meme not found
+        return wpull_hook.actions.FINISH
+
+    elif response_info['status_code'] == 403:
         try_count += 1
         time.sleep(10)
         print('Sleeping....')
@@ -37,15 +52,8 @@ def handle_pre_response(url_info, record_info, response_info):
     return wpull_hook.actions.NORMAL
 
 
-def handle_response(url_info, record_info, response_info):
-    global url_counter
-
-    url_counter += 1
-
-    if url_counter > 1000:
-        print('Too many URLs! Please report this item to the admins.')
-        sys.stdout.flush()
-        return wpull_hook.actions.STOP
+def handle_error(url_info, record_info, error_info):
+    handle_total_try_count()
 
     return wpull_hook.actions.NORMAL
 
@@ -85,9 +93,9 @@ def get_urls(filename, url_info, document_info):
 wpull_hook.callbacks.accept_url = accept_url
 # wpull_hook.callbacks.queued_url = queued_url
 # wpull_hook.callbacks.dequeued_url = dequeued_url
-wpull_hook.callbacks.handle_pre_response = handle_pre_response
+# wpull_hook.callbacks.handle_pre_response = handle_pre_response
 wpull_hook.callbacks.handle_response = handle_response
-# wpull_hook.callbacks.handle_error = handle_error
+wpull_hook.callbacks.handle_error = handle_error
 wpull_hook.callbacks.get_urls = get_urls
 # wpull_hook.callbacks.wait_time = wait_time
 # wpull_hook.callbacks.finish_statistics = finish_statistics
