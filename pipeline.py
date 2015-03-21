@@ -53,7 +53,7 @@ if not WPULL_EXE:
 #
 # Update this each time you make a non-cosmetic change.
 # It will be added to the WARC files and reported to the tracker.
-VERSION = "20150321.02"
+VERSION = "20150321.03"
 USER_AGENT = 'ArchiveTeam'
 TRACKER_ID = 'madden-giferator'
 TRACKER_HOST = 'tracker.archiveteam.org'
@@ -105,10 +105,11 @@ class PrepareDirectories(SimpleTask):
 
     def process(self, item):
         item_name = item["item_name"]
-        escaped_item_name = item_name.replace(':', '_').replace('/', '_')
+        # escaped_item_name = item_name.replace(':', '_').replace('/', '_')
+        escaped_item_name = hashlib.sha1(item_name.encode('utf8')).hexdigest()
         item['escaped_item_name'] = escaped_item_name
 
-        dirname = "/".join((item["data_dir"], escaped_item_name))
+        dirname = os.path.join(item["data_dir"], escaped_item_name)
 
         if os.path.isdir(dirname):
             shutil.rmtree(dirname)
@@ -251,7 +252,7 @@ pipeline = Pipeline(
     CheckIP(),
     GetItemFromTracker("http://%s/%s" % (TRACKER_HOST, TRACKER_ID), downloader,
                        VERSION),
-    PrepareDirectories(warc_prefix="examplecity"),
+    PrepareDirectories(warc_prefix="madden-giferator"),
     WgetDownload(
         WgetArgs(),
         max_tries=1,
