@@ -25,8 +25,8 @@ To run this outside the warrior, clone this repository, cd into its directory an
 
 Grab a copy of Wpull 1.0 from https://launchpad.net/wpull/+download:
 
-    wget https://launchpad.net/wpull/trunk/v1.0/+download/wpull-1.0-linux-i686-3.4.3-20150314005854.zip
-    python -c "import zipfile; f=zipfile.ZipFile('wpull-1.0-linux-i686-3.4.3-20150314005854.zip'); f.extractall('./')"
+    wget https://launchpad.net/wpull/trunk/v1.0/+download/wpull-1.0-linux-x86_64-3.4.3-20150322014153.zip
+    python -c "import zipfile; f=zipfile.ZipFile('wpull-1.0-linux-x86_64-3.4.3-20150322014153.zip'); f.extractall('./')"
 
 then start downloading with:
 
@@ -62,7 +62,7 @@ Distribution-specific setup
     adduser --system --group --shell /bin/bash archiveteam
     apt-get install -y git-core libgnutls-dev screen python-dev python-pip bzip2 zlib1g-dev unzip
     pip install seesaw
-    su -c "cd /home/archiveteam; git clone https://github.com/ArchiveTeam/madden-giferator-grab.git; cd madden-giferator-grab; wget https://launchpad.net/wpull/trunk/v1.0/+download/wpull-1.0-linux-i686-3.4.3-20150314005854.zip; unzip wpull-1.0-linux-i686-3.4.3-20150314005854.zip" archiveteam
+    su -c "cd /home/archiveteam; git clone https://github.com/ArchiveTeam/madden-giferator-grab.git; cd madden-giferator-grab; wget https://launchpad.net/wpull/trunk/v1.0/+download/wpull-1.0-linux-x86_64-3.4.3-20150322014153.zip; unzip wpull-1.0-linux-x86_64-3.4.3-20150322014153.zip" archiveteam
     screen su -c "cd /home/archiveteam/madden-giferator-grab/; run-pipeline pipeline.py --concurrent 2 --address '127.0.0.1' YOURNICKHERE" archiveteam
     [... ctrl+A D to detach ...]
 
