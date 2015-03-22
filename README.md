@@ -27,6 +27,7 @@ Grab a copy of Wpull 1.0 from https://launchpad.net/wpull/+download:
 
     wget https://launchpad.net/wpull/trunk/v1.0/+download/wpull-1.0-linux-x86_64-3.4.3-20150322014153.zip
     python -c "import zipfile; f=zipfile.ZipFile('wpull-1.0-linux-x86_64-3.4.3-20150322014153.zip'); f.extractall('./')"
+    chmod +x ./wpull
 
 then start downloading with:
 
@@ -63,7 +64,7 @@ Distribution-specific setup
     apt-get install -y git-core libgnutls-dev screen python-dev python-pip bzip2 zlib1g-dev unzip
     pip install seesaw
     su -c "cd /home/archiveteam; git clone https://github.com/ArchiveTeam/madden-giferator-grab.git" archiveteam
-    su -c "cd /home/archiveteam/madden-giferator-grab; wget https://launchpad.net/wpull/trunk/v1.0/+download/wpull-1.0-linux-x86_64-3.4.3-20150322014153.zip; unzip wpull-1.0-linux-x86_64-3.4.3-20150322014153.zip" archiveteam
+    su -c "cd /home/archiveteam/madden-giferator-grab; wget https://launchpad.net/wpull/trunk/v1.0/+download/wpull-1.0-linux-x86_64-3.4.3-20150322014153.zip; unzip wpull-1.0-linux-x86_64-3.4.3-20150322014153.zip; chmod +x ./wpull" archiveteam
     screen su -c "cd /home/archiveteam/madden-giferator-grab/; run-pipeline pipeline.py --concurrent 2 --address '127.0.0.1' YOURNICKHERE" archiveteam
     [... ctrl+A D to detach ...]
 
@@ -105,7 +106,7 @@ Ensure that you have the Arch equivalent of bzip2 installed as well.
 3. Modify the run-pipeline script in seesaw to point at `#!/usr/bin/python2` instead of `#!/usr/bin/python`.
 4. `useradd --system --group users --shell /bin/bash --create-home archiveteam`
 5. `su -c "cd /home/archiveteam; git clone https://github.com/ArchiveTeam/madden-giferator-grab.git" archiveteam`
-6. `su -c "cd /home/archiveteam/madden-giferator-grab/; wget https://launchpad.net/wpull/trunk/v1.0/+download/wpull-1.0-linux-x86_64-3.4.3-20150322014153.zip; unzip wpull-1.0-linux-x86_64-3.4.3-20150322014153.zip" archiveteam`
+6. `su -c "cd /home/archiveteam/madden-giferator-grab/; wget https://launchpad.net/wpull/trunk/v1.0/+download/wpull-1.0-linux-x86_64-3.4.3-20150322014153.zip; unzip wpull-1.0-linux-x86_64-3.4.3-20150322014153.zip; chmod +x ./wpull" archiveteam`
 7. `screen su -c "cd /home/archiveteam/madden-giferator-grab/; run-pipeline pipeline.py --concurrent 2 --address '127.0.0.1' YOURNICKHERE" archiveteam`
 
 ### For FreeBSD:
